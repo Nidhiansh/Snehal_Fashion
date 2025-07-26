@@ -101,8 +101,8 @@ export default function Component() {
           </p>
         </div>
         <div className="flex flex-col gap-3 min-[400px]:flex-row">
-          <Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white">
-            Shop Collections
+          <Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white" asChild>
+             <Link href="#collections">Shop Collections</Link>
           </Button>
           <Button
             variant="outline"
@@ -155,18 +155,18 @@ export default function Component() {
             images: ["/images/blue.jpg","/images/blue1.jpg","/images/blue2.jpg"], // ✅
             price: "₹499 + Shipping Charges"
           },
-          {
-            name: "Work Wear Kurtis",
-            desc: "Professional and comfortable",
-            images: ["/images/pink_kurti.jpg","/images/pink_kurti.jpg","/images/pink_kurti.jpg"],
-            price: "₹899"
-          },
-          {
-            name: "Party Kurtis",
-            desc: "Stylish for special occasions",
-            images: ["/images/pink_kurti.jpg","/images/pink_kurti.jpg","/images/pink_kurti.jpg"],
-            price: "₹1099"
-          },
+          // {
+          //   name: "Work Wear Kurtis",
+          //   desc: "Professional and comfortable",
+          //   images: ["/images/pink_kurti.jpg","/images/pink_kurti.jpg","/images/pink_kurti.jpg"],
+          //   price: "₹899"
+          // },
+          // {
+          //   name: "Party Kurtis",
+          //   desc: "Stylish for special occasions",
+          //   images: ["/images/pink_kurti.jpg","/images/pink_kurti.jpg","/images/pink_kurti.jpg"],
+          //   price: "₹1099"
+          // },
           
               ].map((item, index) => (
           <Card
