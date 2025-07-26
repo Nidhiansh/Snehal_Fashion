@@ -15,11 +15,22 @@ export default function Component() {
   const [selectedKurti, setSelectedKurti] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel();
-   useEffect(() => {
+  const [isShippingInfoOpen, setIsShippingInfoOpen] = useState(false);
+  const [isReturnsInfoOpen, setIsReturnsInfoOpen] = useState(false);
+
+  useEffect(() => {
     if (emblaApi && selectedImage !== undefined) {
       emblaApi.scrollTo(selectedImage);
     }
   }, [emblaApi, selectedImage, selectedKurti]);
+
+  const toggleShippingInfo = () => {
+    setIsShippingInfoOpen(!isShippingInfoOpen);
+  };
+
+  const toggleReturnsInfo = () => {
+    setIsReturnsInfoOpen(!isReturnsInfoOpen);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -57,9 +68,12 @@ export default function Component() {
               variant="outline"
               size="sm"
               className="hidden sm:flex bg-transparent border-amber-200 text-amber-700 hover:bg-amber-50"
+              asChild
             >
-              <ShoppingBag className="h-4 w-4 mr-2" />
-              Shop Now
+              <Link href="https://www.instagram.com/snehalfashion____/" target="_blank" rel="noopener noreferrer">
+                <ShoppingBag className="h-4 w-4 mr-2" />
+                Shop Now
+              </Link>
             </Button>
             <Button variant="ghost" size="sm" className="md:hidden">
               <Menu className="h-4 w-4" />
@@ -131,15 +145,15 @@ export default function Component() {
               {[
           {
             name: "Floral Print Kurti",
-            images: ["/images/pink_kurti.jpg","/images/pink_kurti.jpg","/images/pink_kurti.jpg"],
-            price: "₹499 +Shipping Charges",
+            images: ["/images/pink_kurti.jpg","/images/pink_kurti1.jpg","/images/pink_kurti2.jpg"],
+            price: "₹499 + Shipping Charges",
             desc: "Beautiful floral print kurti for all occasions."
           },
           {
-            name: "Festive Kurtis",
+            name: "Leaf print kurti",
             desc: "Elegant designs for celebrations",
-            images: ["/images/pink_kurti.jpg","/images/pink_kurti.jpg","/images/pink_kurti.jpg"], // ✅
-            price: "₹999"
+            images: ["/images/blue.jpg","/images/blue1.jpg","/images/blue2.jpg"], // ✅
+            price: "₹499 + Shipping Charges"
           },
           {
             name: "Work Wear Kurtis",
@@ -153,6 +167,7 @@ export default function Component() {
             images: ["/images/pink_kurti.jpg","/images/pink_kurti.jpg","/images/pink_kurti.jpg"],
             price: "₹1099"
           },
+          
               ].map((item, index) => (
           <Card
             key={index}
@@ -390,7 +405,7 @@ export default function Component() {
                         width={300}
                         height={360}
                         className="rounded-lg mx-auto"
-                        style={{ minWidth: "100%" }}
+                        style={{ minWidth: "100%", maxHeight: "80vh", objectFit: "contain" }}
                       />
                     ))}
                   </div>
@@ -481,17 +496,17 @@ export default function Component() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-amber-600">
+                  <button onClick={toggleShippingInfo} className="hover:text-amber-600">
                     Shipping Info
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-amber-600">
+                  <button onClick={toggleReturnsInfo} className="hover:text-amber-600">
                     Returns
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-amber-600">
+                  <Link href="#contact" className="hover:text-amber-600">
                     Contact Us
                   </Link>
                 </li>
@@ -521,6 +536,52 @@ export default function Component() {
           </div>
         </div>
       </footer>
+
+      {/* Shipping Info Modal */}
+      {isShippingInfoOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl"
+              onClick={toggleShippingInfo}
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-bold mb-4">Shipping Information</h2>
+            <p className="text-gray-700">
+              - Fast and reliable shipping across India.<br />
+              - Order processing time : 2 to 3 business days.<br />
+              - Delivery charges : Depending on your location. (Free for orders above Rs. 999)<br />
+              - Estimated delivery time : 3 to 7 business days after dispatch.<br />
+              - We ensure your order is packed with care and shipped promptly.<br />
+
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Returns Info Modal */}
+      {isReturnsInfoOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl"
+              onClick={toggleReturnsInfo}
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-bold mb-4">Returns Information</h2>
+            <p className="text-gray-700">
+              <div className="text-center">
+                <strong>No Return Policy</strong><br /> 
+              </div>
+              - We offer a 2-day Exchange policy for all our products after delivery.<br />
+              - Items must be returned in their original condition with tags attached.<br />
+              - Please contact our support team to initiate an exchange.<br /> 
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
