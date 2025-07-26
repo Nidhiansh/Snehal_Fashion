@@ -104,7 +104,7 @@ export default function Component() {
         <div className="flex items-center gap-6 text-sm text-gray-600">
           <div className="flex items-center gap-2">
             <Truck className="h-4 w-4 text-amber-600" />
-            <span>Free shipping across India</span>
+            <span>Shipping across India</span>
           </div>
           <div className="flex items-center gap-2">
             <Heart className="h-4 w-4 text-amber-600" />
@@ -160,13 +160,12 @@ export default function Component() {
             onClick={() => {setSelectedKurti(item);setSelectedImage(0);}}
           >
             <CardContent className="p-0">
-              <div className="relative overflow-hidden rounded-lg">
+              <div className="relative overflow-hidden rounded-lg aspect-[5/6]">
                 <Image
                   src={item.images[0]}
                   alt={item.name}
-                  width={250}
-                  height={300}
-                  className="aspect-[5/6] object-cover transition-transform duration-300 group-hover:scale-105"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 text-white">
@@ -518,14 +517,6 @@ export default function Component() {
           <div className="mt-8 pt-8 border-t border-amber-200">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-sm text-gray-600">© {new Date().getFullYear()} Snehal Fashion. All rights reserved.</p>
-              <div className="flex gap-4 text-sm text-gray-600">
-                <Link href="#" className="hover:text-amber-600">
-                  Privacy Policy
-                </Link>
-                <Link href="#" className="hover:text-amber-600">
-                  Terms of Service
-                </Link>
-              </div>
             </div>
           </div>
         </div>
