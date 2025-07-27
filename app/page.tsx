@@ -18,6 +18,16 @@ export default function Component() {
   const [isShippingInfoOpen, setIsShippingInfoOpen] = useState(false);
   const [isReturnsInfoOpen, setIsReturnsInfoOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Loading animation timer - reduced to 800ms
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 400); // 0.4 seconds for the loading animation
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (emblaApi && selectedImage !== undefined) {
@@ -37,12 +47,57 @@ export default function Component() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Loading screen component
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-50">
+        <div className="flex flex-col items-center space-y-4 animate-pulse">
+          <div className="relative">
+            <Image
+              src="/images/snehal-fashion-logo.jpg"
+              alt="Snehal Fashion Logo"
+              width={100}
+              height={100}
+              className="rounded-full object-cover shadow-xl animate-bounce"
+            />
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400/20 to-orange-400/20 animate-ping"></div>
+          </div>
+          <div className="text-center space-y-1">
+            <h1 className="text-3xl font-bold text-gray-900 animate-fade-in">
+              Snehal Fashion
+            </h1>
+            <p className="text-base text-amber-600 animate-fade-in-delay">
+              Where Elegance Meets Style
+            </p>
+          </div>
+          <div className="flex space-x-1">
+            <div className="w-2 h-2 bg-amber-600 rounded-full animate-bounce"></div>
+            <div className="w-2 h-2 bg-amber-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+            <div className="w-2 h-2 bg-amber-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+          </div>
+        </div>
+        
+        {/* Sliding elements that move to final position */}
+        <div className="absolute top-4 left-4 flex items-center space-x-3 opacity-0 animate-slide-to-header" style={{ animationDelay: '0.4s' }}>
+          <Image
+            src="/images/snehal-fashion-logo.jpg"
+            alt="Snehal Fashion Logo"
+            width={40}
+            height={40}
+            className="rounded-full object-cover"
+          />
+          <span className="text-xl font-bold text-gray-900">Snehal Fashion</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen animate-fade-in">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 animate-slide-down">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-          <Link href="/" className="flex items-center space-x-3">
+          <Link href="/" className="flex items-center space-x-3 animate-slide-in-left">
             <Image
               src="/images/snehal-fashion-logo.jpg"
               alt="Snehal Fashion Logo"
@@ -53,7 +108,7 @@ export default function Component() {
             <span className="text-xl font-bold text-gray-900">Snehal Fashion</span>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-6 animate-slide-in-right">
             <Link href="#home" className="text-sm font-medium hover:text-amber-600 transition-colors">
               Home
             </Link>
@@ -68,7 +123,7 @@ export default function Component() {
             </Link>
           </nav>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 animate-slide-in-right">
             <Button
               variant="outline"
               size="sm"
@@ -87,7 +142,7 @@ export default function Component() {
         </div>
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md z-50">
+          <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md z-50 animate-slide-down">
             <nav className="flex flex-col items-center space-y-4 py-4">
               <Link href="#home" className="text-sm font-medium hover:text-amber-600 transition-colors">
                 Home
@@ -119,51 +174,51 @@ export default function Component() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section id="home" className="relative py-12 md:py-24 lg:py-32 bg-gradient-to-br from-amber-50 to-orange-50 flex items-center">
-  <div className="container px-4 md:px-6 flex flex-col items-center justify-center min-h-[400px]">
-    <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto w-full">
-      <div className="flex flex-col justify-center space-y-6 w-full">
-        <div className="space-y-4 w-full">
-          <Badge variant="secondary" className="w-fit bg-amber-100 text-amber-800 hover:bg-amber-200 mx-auto">
-            ✨ New Collection Available
-          </Badge>
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-gray-900">
-            Where Everyday Elegance Meets <span className="text-amber-600">Effortless Style</span>
-          </h1>
-          <p className="max-w-[600px] mx-auto text-gray-600 md:text-xl leading-relaxed">
-            Discover beautiful kurtis that are both affordable and empowering. Our thoughtfully designed kurti
-            collections bring out your confidence, comfort, and charm for every occasion.
-          </p>
-        </div>
-        <div className="flex flex-col gap-3 min-[400px]:flex-row">
-          <Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white" asChild>
-             <Link href="#collections">Shop Collections</Link>
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="border-amber-200 text-amber-700 hover:bg-amber-50 bg-transparent"
-            asChild
-          >
-            <Link href="https://www.instagram.com/snehalfashion____/" target="_blank" rel="noopener noreferrer">
-              Follow on Instagram
-            </Link>
-          </Button>
-        </div>
-        <div className="flex items-center gap-6 text-sm text-gray-600">
-          <div className="flex items-center gap-2">
-            <Truck className="h-4 w-4 text-amber-600" />
-            <span>Shipping across India</span>
+        <section id="home" className="relative py-12 md:py-24 lg:py-32 bg-gradient-to-br from-amber-50 to-orange-50 flex items-center animate-fade-in-up">
+          <div className="container px-4 md:px-6 flex flex-col items-center justify-center min-h-[400px]">
+            <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto w-full">
+              <div className="flex flex-col justify-center space-y-6 w-full">
+                <div className="space-y-4 w-full">
+                  <Badge variant="secondary" className="w-fit bg-amber-100 text-amber-800 hover:bg-amber-200 mx-auto animate-bounce">
+                    ✨ New Collection Available
+                  </Badge>
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-gray-900 animate-fade-in-up">
+                    Where Everyday Elegance Meets <span className="text-amber-600">Effortless Style</span>
+                  </h1>
+                  <p className="max-w-[600px] mx-auto text-gray-600 md:text-xl leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                    Discover beautiful kurtis that are both affordable and empowering. Our thoughtfully designed kurti
+                    collections bring out your confidence, comfort, and charm for every occasion.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3 min-[400px]:flex-row animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                  <Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white" asChild>
+                     <Link href="#collections">Shop Collections</Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="border-amber-200 text-amber-700 hover:bg-amber-50 bg-transparent"
+                    asChild
+                  >
+                    <Link href="https://www.instagram.com/snehalfashion____/" target="_blank" rel="noopener noreferrer">
+                      Follow on Instagram
+                    </Link>
+                  </Button>
+                </div>
+                <div className="flex items-center gap-6 text-sm text-gray-600 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+                  <div className="flex items-center gap-2">
+                    <Truck className="h-4 w-4 text-amber-600" />
+                    <span>Shipping across India</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Heart className="h-4 w-4 text-amber-600" />
+                    <span>Women-owned</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Heart className="h-4 w-4 text-amber-600" />
-            <span>Women-owned</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+        </section>
 
         {/* Collections Section */}
         <section id="collections" className="py-12 md:py-24 lg:py-32">
@@ -183,13 +238,15 @@ export default function Component() {
             images: ["/images/pink_kurti.jpg","/images/pink_kurti1.jpg","/images/pink_kurti2.jpg"],
             price: "₹499 + Shipping Charges",
             desc: "Beautiful floral print kurti for all occasions.",
-            soldOut: true
+            soldOut: true,
           },
           {
             name: "Leaf print kurti",
             desc: "Elegant designs for celebrations",
-            images: ["/images/blue.jpg","/images/blue1.jpg","/images/blue2.jpg"], // ✅
-            price: "₹449 + Shipping Charges"
+            images: ["/images/blue.jpg","/images/blue1.jpg","/images/blue2.jpg"],
+            price: "₹449 + Shipping Charges",
+            soldOut: false,
+
           },
           // {
           //   name: "Work Wear Kurtis",
