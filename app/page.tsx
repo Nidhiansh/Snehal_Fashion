@@ -182,7 +182,8 @@ export default function Component() {
             name: "Floral Print Kurti",
             images: ["/images/pink_kurti.jpg","/images/pink_kurti1.jpg","/images/pink_kurti2.jpg"],
             price: "₹499 + Shipping Charges",
-            desc: "Beautiful floral print kurti for all occasions."
+            desc: "Beautiful floral print kurti for all occasions.",
+            soldOut: true
           },
           {
             name: "Leaf print kurti",
@@ -204,32 +205,47 @@ export default function Component() {
           // },
           
               ].map((item, index) => (
-          <Card
-            key={index}
-            className="group cursor-pointer border-0 shadow-md hover:shadow-xl transition-all duration-300"
-            onClick={() => {setSelectedKurti(item);setSelectedImage(0);}}
-          >
-            <CardContent className="p-0">
-              <div className="relative overflow-hidden rounded-lg aspect-[5/6]">
-                <Image
-                  src={item.images[0]}
-                  alt={item.name}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-4 left-4 text-white">
-            <h3 className="font-semibold text-lg">{item.name}</h3>
-            <p className="text-sm text-gray-200">{item.desc}</p>
-            {item.price && (
-              <span className="mt-1 inline-block bg-amber-600/90 px-2 py-1 rounded text-xs font-semibold">
-                {item.price}
-              </span>
-            )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+<Card
+  key={index}
+  className={`group cursor-pointer border-0 shadow-md hover:shadow-xl transition-all duration-300 ${item.soldOut ? 'opacity-90' : ''}`}
+  onClick={() => {
+    if (!item.soldOut) {
+      setSelectedKurti(item);
+      setSelectedImage(0);
+    }
+  }}
+>
+  <CardContent className="p-0">
+    <div className="relative overflow-hidden rounded-lg aspect-[5/6]">
+      <Image
+        src={item.images[0]}
+        alt={item.name}
+        fill
+        className={`object-cover transition-transform duration-300 ${item.soldOut ? '' : 'group-hover:scale-105'}`}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      
+      {/* Sold Out Banner */}
+      {item.soldOut && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="bg-red-600/90 text-white px-4 py-2 rounded-lg font-bold text-lg shadow-lg transform -rotate-12">
+            SOLD OUT
+          </div>
+        </div>
+      )}
+      
+      <div className="absolute bottom-4 left-4 text-white">
+        <h3 className="font-semibold text-lg">{item.name}</h3>
+        <p className="text-sm text-gray-200">{item.desc}</p>
+        {item.price && (
+          <span className={`mt-1 inline-block px-2 py-1 rounded text-xs font-semibold ${item.soldOut ? 'bg-gray-600/90' : 'bg-amber-600/90'}`}>
+            {item.soldOut ? 'Sold Out' : item.price}
+          </span>
+        )}
+      </div>
+    </div>
+  </CardContent>
+</Card>
               ))}
             </div>
           </div>
