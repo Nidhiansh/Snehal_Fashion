@@ -446,18 +446,22 @@ export default function Component() {
                 </button>
 
                 {/* Carousel */}
-                <div ref={emblaRef} className="overflow-hidden rounded-lg">
-                  <div className="flex" style={{ transform: `translateX(-${selectedImage * 100}%)`, transition: "transform 0.3s" }}>
+                <div className="overflow-hidden rounded-lg">
+                  <div 
+                    className="flex transition-transform duration-500 ease-in-out" 
+                    style={{ transform: `translateX(-${selectedImage * 100}%)` }}
+                  >
                     {selectedKurti.images.map((img, idx) => (
-                      <Image
-                        key={img}
-                        src={img}
-                        alt={selectedKurti.name}
-                        width={300}
-                        height={360}
-                        className="rounded-lg mx-auto"
-                        style={{ minWidth: "100%", maxHeight: "80vh", objectFit: "contain" }}
-                      />
+                      <div key={img} className="w-full flex-shrink-0">
+                        <Image
+                          src={img}
+                          alt={selectedKurti.name}
+                          width={300}
+                          height={360}
+                          className="rounded-lg mx-auto w-full h-auto"
+                          style={{ maxHeight: "60vh", objectFit: "contain" }}
+                        />
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -473,15 +477,19 @@ export default function Component() {
                 </button>
 
                 {/* Dots navigation */}
-                <div className="flex justify-center mt-2 gap-2">
-                  {selectedKurti.images.map((img, idx) => (
-                    <button
-                      key={img}
-                      className={`w-3 h-3 rounded-full border ${selectedImage === idx ? "bg-amber-600" : "bg-gray-300"}`}
-                      onClick={() => setSelectedImage(idx)}
-                    />
-                  ))}
-                </div>
+                {selectedKurti.images.length > 1 && (
+                  <div className="flex justify-center mt-2 gap-2">
+                    {selectedKurti.images.map((img, idx) => (
+                      <button
+                        key={img}
+                        className={`w-3 h-3 rounded-full border transition-colors duration-200 ${
+                          selectedImage === idx ? "bg-amber-600 border-amber-600" : "bg-gray-300 border-gray-300 hover:bg-gray-400"
+                        }`}
+                        onClick={() => setSelectedImage(idx)}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
               {/* Details */}
               <h2 className="text-2xl font-bold mb-2">{selectedKurti.name}</h2>
