@@ -17,6 +17,7 @@ export default function Component() {
   const [emblaRef, emblaApi] = useEmblaCarousel();
   const [isShippingInfoOpen, setIsShippingInfoOpen] = useState(false);
   const [isReturnsInfoOpen, setIsReturnsInfoOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (emblaApi && selectedImage !== undefined) {
@@ -30,6 +31,10 @@ export default function Component() {
 
   const toggleReturnsInfo = () => {
     setIsReturnsInfoOpen(!isReturnsInfoOpen);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -75,11 +80,41 @@ export default function Component() {
                 Shop Now
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" className="md:hidden">
+            <Button variant="ghost" size="sm" className="md:hidden" onClick={toggleMobileMenu}>
               <Menu className="h-4 w-4" />
             </Button>
           </div>
         </div>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md z-50">
+            <nav className="flex flex-col items-center space-y-4 py-4">
+              <Link href="#home" className="text-sm font-medium hover:text-amber-600 transition-colors">
+                Home
+              </Link>
+              <Link href="#collections" className="text-sm font-medium hover:text-amber-600 transition-colors">
+                Collections
+              </Link>
+              <Link href="#about" className="text-sm font-medium hover:text-amber-600 transition-colors">
+                About
+              </Link>
+              <Link href="#contact" className="text-sm font-medium hover:text-amber-600 transition-colors">
+                Contact
+              </Link>
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-transparent border-amber-200 text-amber-700 hover:bg-amber-50"
+                asChild
+              >
+                <Link href="https://www.instagram.com/snehalfashion____/" target="_blank" rel="noopener noreferrer">
+                  <ShoppingBag className="h-4 w-4 mr-2" />
+                  Shop Now
+                </Link>
+              </Button>
+            </nav>
+          </div>
+        )}
       </header>
 
       <main className="flex-1">
@@ -153,7 +188,7 @@ export default function Component() {
             name: "Leaf print kurti",
             desc: "Elegant designs for celebrations",
             images: ["/images/blue.jpg","/images/blue1.jpg","/images/blue2.jpg"], // ✅
-            price: "₹499 + Shipping Charges"
+            price: "₹449 + Shipping Charges"
           },
           // {
           //   name: "Work Wear Kurtis",
