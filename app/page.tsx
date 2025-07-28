@@ -24,7 +24,7 @@ export default function Component() {
     // Loading animation timer - reduced to 800ms
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 400); // 0.4 seconds for the loading animation
+    }, 800); // 0.8 seconds for the loading animation
 
     return () => clearTimeout(timer);
   }, []);
@@ -78,7 +78,7 @@ export default function Component() {
         </div>
         
         {/* Sliding elements that move to final position */}
-        <div className="absolute top-4 left-4 flex items-center space-x-3 opacity-0 animate-slide-to-header" style={{ animationDelay: '0.4s' }}>
+        <div className="absolute top-4 left-4 flex items-center space-x-3 opacity-0 animate-slide-from-center-to-original" style={{ animationDelay: '0.4s' }}>
           <Image
             src="/images/snehal-fashion-logo.jpg"
             alt="Snehal Fashion Logo"
@@ -241,19 +241,19 @@ export default function Component() {
             soldOut: true,
           },
           {
-            name: "Leaf print kurti",
+            name: "Leaf Print Kurti",
             desc: "Elegant designs for celebrations",
             images: ["/images/blue.jpg","/images/blue1.jpg","/images/blue2.jpg"],
             price: "₹449 + Shipping Charges",
             soldOut: false,
 
           },
-          // {
-          //   name: "Work Wear Kurtis",
-          //   desc: "Professional and comfortable",
-          //   images: ["/images/pink_kurti.jpg","/images/pink_kurti.jpg","/images/pink_kurti.jpg"],
-          //   price: "₹899"
-          // },
+          {
+            name: "Black Floral Kurti",
+            desc: "Professional and comfortable",
+            images: ["/images/black.jpg","/images/black1.jpg","/images/black2.jpg"],
+            price: "₹449 + Shipping Charges",
+          },
           // {
           //   name: "Party Kurtis",
           //   desc: "Stylish for special occasions",
@@ -298,6 +298,23 @@ export default function Component() {
           <span className={`mt-1 inline-block px-2 py-1 rounded text-xs font-semibold ${item.soldOut ? 'bg-gray-600/90' : 'bg-amber-600/90'}`}>
             {item.soldOut ? 'Sold Out' : item.price}
           </span>
+        )}
+        {!item.soldOut && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="mt-2 bg-gradient-to-b from-amber-500 to-amber-700 text-white hover:from-amber-600 hover:to-amber-800"
+            asChild
+          >
+            <Link
+              href="https://www.instagram.com/snehalfashion____/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()} // Prevents the card click event
+            >
+              Shop Now
+            </Link>
+          </Button>
         )}
       </div>
     </div>
