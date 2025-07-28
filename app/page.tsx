@@ -299,11 +299,13 @@ export default function Component() {
             {item.soldOut ? 'Sold Out' : item.price}
           </span>
         )}
-        {!item.soldOut && (
+      </div>
+      {!item.soldOut && (
+        <div className="absolute bottom-4 right-4">
           <Button
             variant="outline"
             size="sm"
-            className="mt-2 bg-gradient-to-b from-amber-500 to-amber-700 text-white hover:from-amber-600 hover:to-amber-800"
+            className="bg-gradient-to-b from-amber-500 to-amber-700 text-white hover:from-amber-600 hover:to-amber-800"
             asChild
           >
             <Link
@@ -315,8 +317,8 @@ export default function Component() {
               Shop Now
             </Link>
           </Button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   </CardContent>
 </Card>
