@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Heart, Truck, Instagram, Users, Star, ShoppingBag, Menu, ChevronLeft, ChevronRight } from "lucide-react"
+import { Heart, Truck, Instagram, Users, Star, ShoppingBag, Menu, ChevronLeft, ChevronRight, Ruler } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import React, { useState, useEffect } from "react";
@@ -19,6 +19,7 @@ export default function Component() {
   const [isReturnsInfoOpen, setIsReturnsInfoOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSizeChartOpen, setIsSizeChartOpen] = useState(false);
 
   useEffect(() => {
     // Loading animation timer - reduced to 800ms
@@ -46,6 +47,20 @@ export default function Component() {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const toggleSizeChart = () => {
+    setIsSizeChartOpen(!isSizeChartOpen);
+  };
+
+  // Size chart data
+  const sizeChartData = [
+    { size: "XS", chest: "34", waist: "32", hipSize: "37" },
+    { size: "S", chest: "36", waist: "34", hipSize: "39" },
+    { size: "M", chest: "38", waist: "36", hipSize: "41" },
+    { size: "L", chest: "40", waist: "38", hipSize: "43" },
+    { size: "XL", chest: "42", waist: "40", hipSize: "46" },
+    { size: "XXL", chest: "44", waist: "42", hipSize: "54" },
+  ];
 
   // Loading screen component
   if (isLoading) {
@@ -254,12 +269,12 @@ export default function Component() {
             images: ["/images/black.jpg","/images/black1.jpg","/images/black2.jpg"],
             price: "₹449 + Shipping Charges",
           },
-          // {
-          //   name: "Party Kurtis",
-          //   desc: "Stylish for special occasions",
-          //   images: ["/images/pink_kurti.jpg","/images/pink_kurti.jpg","/images/pink_kurti.jpg"],
-          //   price: "₹1099"
-          // },
+          {
+            name: "Hot Red Kurti",
+            desc: "Stylish for all occasions",
+            images: ["/images/red1.jpg","/images/red.jpg"],
+            price: "₹599",
+          },
           
               ].map((item, index) => (
 <Card
@@ -570,7 +585,32 @@ export default function Component() {
               {/* Details */}
               <h2 className="text-2xl font-bold mb-2">{selectedKurti.name}</h2>
               <p className="text-gray-700 mb-2">{selectedKurti.desc || selectedKurti.description}</p>
-              <p className="text-amber-700 font-semibold mb-2">{selectedKurti.price}</p>
+              <p className="text-amber-700 font-semibold mb-4">{selectedKurti.price}</p>
+              
+              {/* Size Chart Button */}
+              <div className="flex gap-2 mb-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-amber-200 text-amber-700 hover:bg-amber-50"
+                  onClick={toggleSizeChart}
+                >
+                  <Ruler className="h-4 w-4 mr-2" />
+                  Size Chart
+                </Button>
+                <Button
+                  className="bg-amber-600 hover:bg-amber-700 text-white flex-1"
+                  asChild
+                >
+                  <Link
+                    href="https://www.instagram.com/snehalfashion____/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Shop Now
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         )}
@@ -714,6 +754,54 @@ export default function Component() {
               - Items must be returned in their original condition with tags attached.<br />
               - Please contact our support team to initiate an exchange.<br /> 
             </p>
+          </div>
+        </div>
+      )}
+
+      {/* Size Chart Modal */}
+      {isSizeChartOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60">
+          <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative mx-4">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl"
+              onClick={toggleSizeChart}
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-bold mb-4 text-center">Size Chart</h2>
+            <p className="text-sm text-gray-600 mb-4 text-center">All measurements are in inches</p>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-amber-100">
+                    <th className="border border-gray-300 px-3 py-2 text-left font-semibold text-gray-900">Size</th>
+                    <th className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-900">Chest</th>
+                    <th className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-900">Waist</th>
+                    <th className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-900">Hip Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sizeChartData.map((row, index) => (
+                    <tr key={row.size} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
+                      <td className="border border-gray-300 px-3 py-2 font-medium text-amber-700">{row.size}</td>
+                      <td className="border border-gray-300 px-3 py-2 text-center">{row.chest}</td>
+                      <td className="border border-gray-300 px-3 py-2 text-center">{row.waist}</td>
+                      <td className="border border-gray-300 px-3 py-2 text-center">{row.hipSize}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            
+            <div className="mt-4 p-3 bg-amber-50 rounded-lg">
+              <p className="text-sm text-gray-700">
+                <strong>How to measure:</strong><br />
+                • <strong>Chest:</strong> Measure around the fullest part of your chest<br />
+                • <strong>Waist:</strong> Measure around your natural waistline<br />
+                • <strong>Hip:</strong> Measure around the fullest part of your hips
+              </p>
+            </div>
           </div>
         </div>
       )}
