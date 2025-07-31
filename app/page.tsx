@@ -273,8 +273,15 @@ export default function Component() {
             name: "Hot Red Kurti",
             desc: "Stylish for all occasions",
             images: ["/images/red1.jpg","/images/red.jpg"],
-            price: "₹599",
+            price: "₹599 + Shipping Charges",
           },
+          {
+            name: "Fresh Green Kurti",
+            desc: "Simple and elegant",
+            images: ["/images/green1.jpg","/images/green.jpg"],
+            price: "₹349 + Shipping Charges",
+          },
+          
           
               ].map((item, index) => (
 <Card
