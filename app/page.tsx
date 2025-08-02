@@ -284,7 +284,7 @@ export default function Component() {
           {
             name: "Designer Green Suit",
             desc: "Suitable for all occasions",
-            images: ["/images/suit.jpg","/images/suit1.jpg"],
+            images: ["/images/Suit.jpg","/images/Suit1.jpg"],
             price: "₹1299 + Shipping Charges",
           },
           
