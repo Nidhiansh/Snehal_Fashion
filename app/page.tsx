@@ -281,6 +281,12 @@ export default function Component() {
             images: ["/images/green1.jpg","/images/green.jpg"],
             price: "₹349 + Shipping Charges",
           },
+          {
+            name: "Designer Green Suit",
+            desc: "Suitable for all occasions",
+            images: ["/images/suit.jpg","/images/suit1.jpg"],
+            price: "₹1299 + Shipping Charges",
+          },
           
           
               ].map((item, index) => (
